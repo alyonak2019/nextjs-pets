@@ -50,19 +50,19 @@ export default function Chat() {
   function hanleChatSubmit(e) {
     e.preventDefault()
 
-    fetch("/admin/send-chat", {   
-      method: "POST", 
-      headers: {
-        "Content-Type": "application/json" 
-      },
-      body: JSON.stringify({message: userMessage, socket_id: socketId}), 
-    })
-
-    setMessageLog(prev => [...prev, {message: userMessage, selfMessage: true}])
-
-    setUserMessage("")
-    // chatField.current.value = ""
-    // chatField.current.focus()
+    if (userMessage.trim()) {
+      fetch("/admin/send-chat", {   
+        method: "POST", 
+        headers: {
+          "Content-Type": "application/json" 
+        },
+        body: JSON.stringify({message: userMessage.trim(), socket_id: socketId}), 
+      })
+  
+      setMessageLog(prev => [...prev, {message: userMessage.trim(), selfMessage: true}])
+  
+      setUserMessage("")
+    }
   }
 
   function handleInputChange(e) {
